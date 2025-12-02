@@ -143,6 +143,9 @@ public class MobSwapPlugin extends JavaPlugin {
             if (PLAYERS_ENTITY_TO_KILL.get(id) != type)
                 return;
             PLAYERS_ENTITY_TO_KILL.remove(id);
+            Bukkit.getOnlinePlayers().forEach(online -> {
+                online.sendMessage(MINI_MESSAGE.deserialize("<green><player> has killed their mob!", TagResolver.resolver("player", Tag.selfClosingInserting(player.displayName()))));
+            });
             if (!PLAYERS_ENTITY_TO_KILL.isEmpty())
                 return;
             assignTasksToPlayers();
@@ -154,7 +157,6 @@ public class MobSwapPlugin extends JavaPlugin {
         Bukkit.getOnlinePlayers().forEach(player -> {
             final EntityType randomType = TYPE_LIST.get(RANDOM.nextInt(TYPE_LIST.size()));
             PLAYERS_ENTITY_TO_KILL.put(player.getUniqueId(), randomType);
-            System.out.println("HERE");
             player.sendMessage(MobSwapPlugin.MINI_MESSAGE.deserialize("<red>Your mob is: <mob>",
                     TagResolver.resolver("mob", Tag.selfClosingInserting(
                             Component.text(randomType.key().asMinimalString())))));
