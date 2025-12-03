@@ -83,7 +83,6 @@ public class MobSwapPlugin extends JavaPlugin {
         typeList.add(EntityType.DONKEY);
         typeList.add(EntityType.FROG);
         typeList.add(EntityType.GLOW_SQUID);
-        typeList.add(EntityType.HAPPY_GHAST);
         typeList.add(EntityType.HORSE);
         typeList.add(EntityType.MOOSHROOM);
         typeList.add(EntityType.MULE);
@@ -93,7 +92,6 @@ public class MobSwapPlugin extends JavaPlugin {
         typeList.add(EntityType.RABBIT);
         typeList.add(EntityType.SALMON);
         typeList.add(EntityType.SHEEP);
-        typeList.add(EntityType.SNIFFER);
         typeList.add(EntityType.SNOW_GOLEM);
         typeList.add(EntityType.SQUID);
         typeList.add(EntityType.STRIDER);
@@ -102,9 +100,6 @@ public class MobSwapPlugin extends JavaPlugin {
         typeList.add(EntityType.TURTLE);
         typeList.add(EntityType.VILLAGER);
         typeList.add(EntityType.WANDERING_TRADER);
-
-        typeList.add(EntityType.SKELETON_HORSE);
-        typeList.add(EntityType.ZOMBIE_HORSE);
 
         typeList.add(EntityType.BEE);
         typeList.add(EntityType.DOLPHIN);
@@ -142,7 +137,6 @@ public class MobSwapPlugin extends JavaPlugin {
         typeList.add(EntityType.PIGLIN_BRUTE);
         typeList.add(EntityType.PILLAGER);
         typeList.add(EntityType.RAVAGER);
-        typeList.add(EntityType.SHULKER);
         typeList.add(EntityType.SILVERFISH);
         typeList.add(EntityType.SKELETON);
         typeList.add(EntityType.SLIME);
