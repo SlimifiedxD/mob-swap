@@ -4,5 +4,7 @@
     <option name="show" value="ASK" />
     <option name="description" value="" />
   </component>
-  <component name="KubernetesApiProvider">{}</component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="KubernetesApiProvider"><![CDATA[{}]]></component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_21" project-jdk-name="jbr-21" project-jdk-type="JavaSDK" />
 </project>

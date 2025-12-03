@@ -1,9 +1,11 @@
 package org.slimecraft.mobswap;
 
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.EntityType;
 import org.slimecraft.bedrock.task.Task;
 import org.slimecraft.bedrock.util.Ticks;
 import org.slimecraft.funmands.paper.PaperCommand;
@@ -54,8 +56,14 @@ public class MobSwapCommand extends PaperCommand {
                     if (countdownAmount == 0) {
                         countdown.set(60 * MINUTES_PER_SWAP);
                         Bukkit.getOnlinePlayers().forEach(player -> {
-                            if (!MobSwapPlugin.PLAYERS_ENTITY_TO_KILL.containsKey(player.getUniqueId()))
+                            final UUID id = player.getUniqueId();
+                            if (!MobSwapPlugin.PLAYERS_ENTITY_TO_KILL.containsKey(id))
                                 return;
+                            for (int i = 0; i < 10; i++) {
+                                Bukkit.getOnlinePlayers().forEach(online -> {
+                                    online.getWorld().spawnEntity(online.getLocation(), MobSwapPlugin.PLAYERS_ENTITY_TO_KILL.get(id));
+                                });
+                            }
                             Bukkit.getOnlinePlayers().forEach(notifier -> {
                                 notifier.sendMessage(MobSwapPlugin.MINI_MESSAGE
                                         .deserialize("<red><player> has failed to kill the mob in time!",

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.SlimifiedxD/bedrock/main-SNAPSHOT/6521edd4853f454648916663d5102a3ae11fe027/bedrock-main-SNAPSHOT.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.yaml/snakeyaml/2.5/2d53ddec134280cb384c1e35d094e5f71c1f2316/snakeyaml-2.5.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.github.classgraph/classgraph/4.8.173/236e1b4360bf078142902c6c3ca80a03bfa95d5d/classgraph-4.8.173.jar" />
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/fr.mrmicky/fastboard/2.1.5/73ea2de8f747c398d17cc823537e6d6e8762bd8e/fastboard-2.1.5.jar" />
+        </processorPath>
+        <module name="mob-swap.app.main" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="21" />
+  </component>
+</project>
