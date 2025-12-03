@@ -2,30 +2,21 @@ package org.slimecraft.mobswap;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slimecraft.bedrock.annotation.plugin.Plugin;
 import org.slimecraft.bedrock.event.EventNode;
-import org.slimecraft.bedrock.task.Task;
-import org.slimecraft.bedrock.util.Ticks;
 import org.slimecraft.funmands.paper.PaperFunmandsManager;
 
-import io.papermc.paper.registry.RegistryAccess;
-import io.papermc.paper.registry.RegistryKey;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.Tag;
@@ -33,99 +24,10 @@ import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 
 @Plugin("mob-swap")
 public class MobSwapPlugin extends JavaPlugin {
-    private static final List<EntityType> TYPE_LIST = new ArrayList<>();
     private static final Random RANDOM = new Random();
     public static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
     public static final Map<UUID, EntityType> PLAYERS_ENTITY_TO_KILL = new HashMap<>();
-
-    static {
-        TYPE_LIST.add(EntityType.ALLAY);
-        TYPE_LIST.add(EntityType.ARMADILLO);
-        TYPE_LIST.add(EntityType.AXOLOTL);
-        TYPE_LIST.add(EntityType.BAT);
-        TYPE_LIST.add(EntityType.CAMEL);
-        TYPE_LIST.add(EntityType.CAT);
-        TYPE_LIST.add(EntityType.CHICKEN);
-        TYPE_LIST.add(EntityType.COD);
-        TYPE_LIST.add(EntityType.COPPER_GOLEM);
-        TYPE_LIST.add(EntityType.COW);
-        TYPE_LIST.add(EntityType.DONKEY);
-        TYPE_LIST.add(EntityType.FROG);
-        TYPE_LIST.add(EntityType.GLOW_SQUID);
-        TYPE_LIST.add(EntityType.HAPPY_GHAST);
-        TYPE_LIST.add(EntityType.HORSE);
-        TYPE_LIST.add(EntityType.MOOSHROOM);
-        TYPE_LIST.add(EntityType.MULE);
-        TYPE_LIST.add(EntityType.OCELOT);
-        TYPE_LIST.add(EntityType.PARROT);
-        TYPE_LIST.add(EntityType.PIG);
-        TYPE_LIST.add(EntityType.RABBIT);
-        TYPE_LIST.add(EntityType.SALMON);
-        TYPE_LIST.add(EntityType.SHEEP);
-        TYPE_LIST.add(EntityType.SNIFFER);
-        TYPE_LIST.add(EntityType.SNOW_GOLEM);
-        TYPE_LIST.add(EntityType.SQUID);
-        TYPE_LIST.add(EntityType.STRIDER);
-        TYPE_LIST.add(EntityType.TADPOLE);
-        TYPE_LIST.add(EntityType.TROPICAL_FISH);
-        TYPE_LIST.add(EntityType.TURTLE);
-        TYPE_LIST.add(EntityType.VILLAGER);
-        TYPE_LIST.add(EntityType.WANDERING_TRADER);
-
-        TYPE_LIST.add(EntityType.SKELETON_HORSE);
-        TYPE_LIST.add(EntityType.ZOMBIE_HORSE);
-
-        TYPE_LIST.add(EntityType.BEE);
-        TYPE_LIST.add(EntityType.DOLPHIN);
-        TYPE_LIST.add(EntityType.FOX);
-        TYPE_LIST.add(EntityType.GOAT);
-        TYPE_LIST.add(EntityType.IRON_GOLEM);
-        TYPE_LIST.add(EntityType.LLAMA);
-        TYPE_LIST.add(EntityType.PANDA);
-        TYPE_LIST.add(EntityType.POLAR_BEAR);
-        TYPE_LIST.add(EntityType.PUFFERFISH);
-        TYPE_LIST.add(EntityType.TRADER_LLAMA);
-        TYPE_LIST.add(EntityType.WOLF);
-
-        TYPE_LIST.add(EntityType.CAVE_SPIDER);
-        TYPE_LIST.add(EntityType.DROWNED);
-        TYPE_LIST.add(EntityType.ENDERMAN);
-        TYPE_LIST.add(EntityType.PIGLIN);
-        TYPE_LIST.add(EntityType.SPIDER);
-        TYPE_LIST.add(EntityType.ZOMBIFIED_PIGLIN);
-
-        TYPE_LIST.add(EntityType.BLAZE);
-        TYPE_LIST.add(EntityType.BOGGED);
-        TYPE_LIST.add(EntityType.BREEZE);
-        TYPE_LIST.add(EntityType.CREAKING);
-        TYPE_LIST.add(EntityType.CREEPER);
-        TYPE_LIST.add(EntityType.ELDER_GUARDIAN);
-        TYPE_LIST.add(EntityType.ENDERMITE);
-        TYPE_LIST.add(EntityType.EVOKER);
-        TYPE_LIST.add(EntityType.GHAST);
-        TYPE_LIST.add(EntityType.GUARDIAN);
-        TYPE_LIST.add(EntityType.HOGLIN);
-        TYPE_LIST.add(EntityType.HUSK);
-        TYPE_LIST.add(EntityType.MAGMA_CUBE);
-        TYPE_LIST.add(EntityType.PHANTOM);
-        TYPE_LIST.add(EntityType.PIGLIN_BRUTE);
-        TYPE_LIST.add(EntityType.PILLAGER);
-        TYPE_LIST.add(EntityType.RAVAGER);
-        TYPE_LIST.add(EntityType.SHULKER);
-        TYPE_LIST.add(EntityType.SILVERFISH);
-        TYPE_LIST.add(EntityType.SKELETON);
-        TYPE_LIST.add(EntityType.SLIME);
-        TYPE_LIST.add(EntityType.STRAY);
-        TYPE_LIST.add(EntityType.VEX);
-        TYPE_LIST.add(EntityType.VINDICATOR);
-        TYPE_LIST.add(EntityType.WARDEN);
-        TYPE_LIST.add(EntityType.WITCH);
-        TYPE_LIST.add(EntityType.WITHER_SKELETON);
-        TYPE_LIST.add(EntityType.ZOGLIN);
-        TYPE_LIST.add(EntityType.ZOMBIE);
-        TYPE_LIST.add(EntityType.ZOMBIE_VILLAGER);
-
-    }
+    private static final Map<UUID, List<EntityType>> AVAILABLE_ENTITIES = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -155,12 +57,105 @@ public class MobSwapPlugin extends JavaPlugin {
 
     public static void assignTasksToPlayers() {
         Bukkit.getOnlinePlayers().forEach(player -> {
-            final EntityType randomType = TYPE_LIST.get(RANDOM.nextInt(TYPE_LIST.size()));
-            TYPE_LIST.remove(randomType);
-            PLAYERS_ENTITY_TO_KILL.put(player.getUniqueId(), randomType);
+            final UUID id = player.getUniqueId();
+            final List<EntityType> typeList = AVAILABLE_ENTITIES.getOrDefault(id, createTypeList());
+            final EntityType randomType = typeList.get(RANDOM.nextInt(typeList.size()));
+            typeList.remove(randomType);
+            PLAYERS_ENTITY_TO_KILL.put(id, randomType);
             player.sendMessage(MobSwapPlugin.MINI_MESSAGE.deserialize("<red>Your mob is: <mob>",
                     TagResolver.resolver("mob", Tag.selfClosingInserting(
                             Component.text(randomType.key().asMinimalString())))));
         });
+    }
+
+    private static List<EntityType> createTypeList() {
+        final List<EntityType> typeList = new ArrayList<>();
+        typeList.add(EntityType.ALLAY);
+        typeList.add(EntityType.ARMADILLO);
+        typeList.add(EntityType.AXOLOTL);
+        typeList.add(EntityType.BAT);
+        typeList.add(EntityType.CAMEL);
+        typeList.add(EntityType.CAT);
+        typeList.add(EntityType.CHICKEN);
+        typeList.add(EntityType.COD);
+        typeList.add(EntityType.COPPER_GOLEM);
+        typeList.add(EntityType.COW);
+        typeList.add(EntityType.DONKEY);
+        typeList.add(EntityType.FROG);
+        typeList.add(EntityType.GLOW_SQUID);
+        typeList.add(EntityType.HAPPY_GHAST);
+        typeList.add(EntityType.HORSE);
+        typeList.add(EntityType.MOOSHROOM);
+        typeList.add(EntityType.MULE);
+        typeList.add(EntityType.OCELOT);
+        typeList.add(EntityType.PARROT);
+        typeList.add(EntityType.PIG);
+        typeList.add(EntityType.RABBIT);
+        typeList.add(EntityType.SALMON);
+        typeList.add(EntityType.SHEEP);
+        typeList.add(EntityType.SNIFFER);
+        typeList.add(EntityType.SNOW_GOLEM);
+        typeList.add(EntityType.SQUID);
+        typeList.add(EntityType.STRIDER);
+        typeList.add(EntityType.TADPOLE);
+        typeList.add(EntityType.TROPICAL_FISH);
+        typeList.add(EntityType.TURTLE);
+        typeList.add(EntityType.VILLAGER);
+        typeList.add(EntityType.WANDERING_TRADER);
+
+        typeList.add(EntityType.SKELETON_HORSE);
+        typeList.add(EntityType.ZOMBIE_HORSE);
+
+        typeList.add(EntityType.BEE);
+        typeList.add(EntityType.DOLPHIN);
+        typeList.add(EntityType.FOX);
+        typeList.add(EntityType.GOAT);
+        typeList.add(EntityType.IRON_GOLEM);
+        typeList.add(EntityType.LLAMA);
+        typeList.add(EntityType.PANDA);
+        typeList.add(EntityType.POLAR_BEAR);
+        typeList.add(EntityType.PUFFERFISH);
+        typeList.add(EntityType.TRADER_LLAMA);
+        typeList.add(EntityType.WOLF);
+
+        typeList.add(EntityType.CAVE_SPIDER);
+        typeList.add(EntityType.DROWNED);
+        typeList.add(EntityType.ENDERMAN);
+        typeList.add(EntityType.PIGLIN);
+        typeList.add(EntityType.SPIDER);
+        typeList.add(EntityType.ZOMBIFIED_PIGLIN);
+
+        typeList.add(EntityType.BLAZE);
+        typeList.add(EntityType.BOGGED);
+        typeList.add(EntityType.BREEZE);
+        typeList.add(EntityType.CREAKING);
+        typeList.add(EntityType.CREEPER);
+        typeList.add(EntityType.ELDER_GUARDIAN);
+        typeList.add(EntityType.ENDERMITE);
+        typeList.add(EntityType.EVOKER);
+        typeList.add(EntityType.GHAST);
+        typeList.add(EntityType.GUARDIAN);
+        typeList.add(EntityType.HOGLIN);
+        typeList.add(EntityType.HUSK);
+        typeList.add(EntityType.MAGMA_CUBE);
+        typeList.add(EntityType.PHANTOM);
+        typeList.add(EntityType.PIGLIN_BRUTE);
+        typeList.add(EntityType.PILLAGER);
+        typeList.add(EntityType.RAVAGER);
+        typeList.add(EntityType.SHULKER);
+        typeList.add(EntityType.SILVERFISH);
+        typeList.add(EntityType.SKELETON);
+        typeList.add(EntityType.SLIME);
+        typeList.add(EntityType.STRAY);
+        typeList.add(EntityType.VEX);
+        typeList.add(EntityType.VINDICATOR);
+        typeList.add(EntityType.WARDEN);
+        typeList.add(EntityType.WITCH);
+        typeList.add(EntityType.WITHER_SKELETON);
+        typeList.add(EntityType.ZOGLIN);
+        typeList.add(EntityType.ZOMBIE);
+        typeList.add(EntityType.ZOMBIE_VILLAGER);
+
+        return typeList;
     }
 }
