@@ -58,7 +58,7 @@ public class MobSwapPlugin extends JavaPlugin {
     public static void assignTasksToPlayers() {
         Bukkit.getOnlinePlayers().forEach(player -> {
             final UUID id = player.getUniqueId();
-            final List<EntityType> typeList = AVAILABLE_ENTITIES.getOrDefault(id, createTypeList());
+            final List<EntityType> typeList = AVAILABLE_ENTITIES.computeIfAbsent(id, uuid -> createTypeList());
             final EntityType randomType = typeList.get(RANDOM.nextInt(typeList.size()));
             typeList.remove(randomType);
             PLAYERS_ENTITY_TO_KILL.put(id, randomType);
