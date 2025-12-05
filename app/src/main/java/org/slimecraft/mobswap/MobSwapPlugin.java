@@ -68,6 +68,7 @@ public class MobSwapPlugin extends JavaPlugin {
                     online.sendMessage(MINI_MESSAGE.deserialize("<green><bold><player> has won!",
                             TagResolver.resolver("player", Tag.selfClosingInserting(player.displayName()))));
                 });
+                Bukkit.getServer().shutdown();
                 return;
             }
             Bukkit.getOnlinePlayers().forEach(online -> {
