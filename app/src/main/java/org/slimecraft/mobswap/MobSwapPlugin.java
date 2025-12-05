@@ -51,7 +51,7 @@ public class MobSwapPlugin extends JavaPlugin {
                 POINTS
                         .entrySet()
                         .stream()
-                        .sorted(Map.Entry.comparingByValue())
+                        .sorted(Map.Entry.<UUID, Integer>comparingByValue().reversed())
                         .forEach(entry -> {
                             components.add(MINI_MESSAGE.deserialize("<aqua><player><reset>: <yellow><points>",
                                     TagResolver.resolver("player",
