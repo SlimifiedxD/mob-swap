@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a33106e1-a1cc-4d8d-b28b-6a849ff33c6e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/app/mob-swap.app.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/mob-swap.app.main.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/org/slimecraft/mobswap/MobSwapPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/slimecraft/mobswap/MobSwapPlugin.java" afterDir="false" />
     </list>
@@ -98,7 +99,7 @@
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
 }</component>
-  <component name="RunManager" selected="Gradle.mob-swap:app [shadowJar]">
+  <component name="RunManager" selected="Gradle.mob-swap:app [runServer]">
     <configuration name="mob-swap:app [runServer]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -145,8 +146,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.mob-swap:app [shadowJar]" />
         <item itemvalue="Gradle.mob-swap:app [runServer]" />
+        <item itemvalue="Gradle.mob-swap:app [shadowJar]" />
       </list>
     </recent_temporary>
   </component>
@@ -167,6 +168,8 @@
       <workItem from="1764692371344" duration="8300000" />
       <workItem from="1764738082786" duration="2000" />
       <workItem from="1764797886472" duration="329000" />
+      <workItem from="1764885830688" duration="168000" />
+      <workItem from="1764888874478" duration="4958000" />
     </task>
     <servers />
   </component>

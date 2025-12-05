@@ -15,7 +15,7 @@ import net.kyori.adventure.text.minimessage.tag.Tag;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 
 public class MobSwapCommand extends PaperCommand {
-    private static final int MINUTES_PER_SWAP = 5;
+    private static final int MINUTES_PER_SWAP = 1;
     private static Task CURRENT_COUNTDOWN_TASK = null;
 
     public MobSwapCommand() {

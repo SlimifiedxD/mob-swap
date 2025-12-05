@@ -7,14 +7,18 @@ import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
+import fr.mrmicky.fastboard.adventure.FastBoard;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.slimecraft.bedrock.annotation.plugin.Plugin;
 import org.slimecraft.bedrock.event.EventNode;
+import org.slimecraft.bedrock.internal.Bedrock;
+import org.slimecraft.bedrock.util.FastBoardHelper;
 import org.slimecraft.funmands.paper.PaperFunmandsManager;
 
 import net.kyori.adventure.text.Component;
@@ -28,6 +32,7 @@ public class MobSwapPlugin extends JavaPlugin {
     public static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
     public static final Map<UUID, EntityType> PLAYERS_ENTITY_TO_KILL = new HashMap<>();
     private static final Map<UUID, List<EntityType>> AVAILABLE_ENTITIES = new HashMap<>();
+    private static final Map<UUID, Integer> POINTS = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -45,6 +50,15 @@ public class MobSwapPlugin extends JavaPlugin {
             if (PLAYERS_ENTITY_TO_KILL.get(id) != type)
                 return;
             PLAYERS_ENTITY_TO_KILL.remove(id);
+            POINTS.merge(id, 1, Integer::sum);
+            FastBoardHelper.refreshBoards(online -> {
+                final List<Component> components = new ArrayList<>();
+                POINTS.forEach((uuid, integer) -> {
+                    components.add(MINI_MESSAGE.deserialize("<aqua><player><reset>: <yellow><points>", TagResolver.resolver("player", Tag.selfClosingInserting(Component.text(Bukkit.getOfflinePlayer(id).getName()))), TagResolver.resolver("points", Tag.selfClosingInserting(Component.text(integer)))));
+                });
+
+                return components;
+            });
             Bukkit.getOnlinePlayers().forEach(online -> {
                 online.sendMessage(MINI_MESSAGE.deserialize("<green><player> has killed their mob!", TagResolver.resolver("player", Tag.selfClosingInserting(player.displayName()))));
             });
@@ -52,6 +66,10 @@ public class MobSwapPlugin extends JavaPlugin {
                 return;
             assignTasksToPlayers();
             MobSwapCommand.doCountdownTask();
+        });
+        EventNode.global().addListener(PlayerJoinEvent.class, event -> {
+            final FastBoard board = FastBoardHelper.create(event.getPlayer());
+            board.updateTitle(MINI_MESSAGE.deserialize("<green><bold>POINTS"));
         });
     }
 
