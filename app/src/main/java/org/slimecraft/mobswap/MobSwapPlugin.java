@@ -87,7 +87,6 @@ public class MobSwapPlugin extends JavaPlugin {
 
     private static List<EntityType> createTypeList() {
         final List<EntityType> typeList = new ArrayList<>();
-        typeList.add(EntityType.ALLAY);
         typeList.add(EntityType.ARMADILLO);
         typeList.add(EntityType.AXOLOTL);
         typeList.add(EntityType.BAT);
@@ -159,7 +158,6 @@ public class MobSwapPlugin extends JavaPlugin {
         typeList.add(EntityType.STRAY);
         typeList.add(EntityType.VEX);
         typeList.add(EntityType.VINDICATOR);
-        typeList.add(EntityType.WARDEN);
         typeList.add(EntityType.WITCH);
         typeList.add(EntityType.WITHER_SKELETON);
         typeList.add(EntityType.ZOGLIN);
