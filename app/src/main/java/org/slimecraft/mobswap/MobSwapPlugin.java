@@ -54,7 +54,7 @@ public class MobSwapPlugin extends JavaPlugin {
             FastBoardHelper.refreshBoards(online -> {
                 final List<Component> components = new ArrayList<>();
                 POINTS.forEach((uuid, integer) -> {
-                    components.add(MINI_MESSAGE.deserialize("<aqua><player><reset>: <yellow><points>", TagResolver.resolver("player", Tag.selfClosingInserting(Component.text(Bukkit.getOfflinePlayer(id).getName()))), TagResolver.resolver("points", Tag.selfClosingInserting(Component.text(integer)))));
+                    components.add(MINI_MESSAGE.deserialize("<aqua><player><reset>: <yellow><points>", TagResolver.resolver("player", Tag.selfClosingInserting(Component.text(Bukkit.getOfflinePlayer(uuid).getName()))), TagResolver.resolver("points", Tag.selfClosingInserting(Component.text(integer)))));
                 });
 
                 return components;
