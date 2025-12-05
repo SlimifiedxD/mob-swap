@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a33106e1-a1cc-4d8d-b28b-6a849ff33c6e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/app/mob-swap.app.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/app/mob-swap.app.main.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/slimecraft/mobswap/MobSwapPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/slimecraft/mobswap/MobSwapPlugin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/org/slimecraft/mobswap/MobSwapCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/org/slimecraft/mobswap/MobSwapCommand.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -169,7 +166,7 @@
       <workItem from="1764738082786" duration="2000" />
       <workItem from="1764797886472" duration="329000" />
       <workItem from="1764885830688" duration="168000" />
-      <workItem from="1764888874478" duration="4958000" />
+      <workItem from="1764888874478" duration="5220000" />
     </task>
     <servers />
   </component>

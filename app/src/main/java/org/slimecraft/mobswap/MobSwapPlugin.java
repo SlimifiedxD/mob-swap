@@ -117,7 +117,6 @@ public class MobSwapPlugin extends JavaPlugin {
         typeList.add(EntityType.TROPICAL_FISH);
         typeList.add(EntityType.TURTLE);
         typeList.add(EntityType.VILLAGER);
-        typeList.add(EntityType.WANDERING_TRADER);
 
         typeList.add(EntityType.BEE);
         typeList.add(EntityType.DOLPHIN);
