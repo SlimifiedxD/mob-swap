@@ -1,11 +1,6 @@
 package org.slimecraft.mobswap;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 import fr.mrmicky.fastboard.adventure.FastBoard;
 import org.bukkit.Bukkit;
@@ -53,9 +48,13 @@ public class MobSwapPlugin extends JavaPlugin {
             POINTS.merge(id, 1, Integer::sum);
             FastBoardHelper.refreshBoards(online -> {
                 final List<Component> components = new ArrayList<>();
-                POINTS.forEach((uuid, integer) -> {
-                    components.add(MINI_MESSAGE.deserialize("<aqua><player><reset>: <yellow><points>", TagResolver.resolver("player", Tag.selfClosingInserting(Component.text(Bukkit.getOfflinePlayer(uuid).getName()))), TagResolver.resolver("points", Tag.selfClosingInserting(Component.text(integer)))));
-                });
+                POINTS
+                        .entrySet()
+                        .stream()
+                        .sorted(Map.Entry.comparingByValue())
+                        .forEach(entry -> {
+                            components.add(MINI_MESSAGE.deserialize("<aqua><player><reset>: <yellow><points>", TagResolver.resolver("player", Tag.selfClosingInserting(Component.text(Bukkit.getOfflinePlayer(entry.getKey()).getName()))), TagResolver.resolver("points", Tag.selfClosingInserting(Component.text(entry.getValue())))));
+                        });
 
                 return components;
             });
