@@ -15,19 +15,22 @@ import net.kyori.adventure.text.minimessage.tag.Tag;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 
 public class MobSwapCommand extends PaperCommand {
-    private static final int MINUTES_PER_SWAP = 5;
+    private static int MINUTES_PER_SWAP = 5;
+    public static int POINT_GOAL = 5;
     private static Task CURRENT_COUNTDOWN_TASK = null;
 
     public MobSwapCommand() {
         super("mobswap");
         final AtomicBoolean started = new AtomicBoolean(false);
 
-        addFormat("", ctx -> {
+        addFormat("minutes:int points:int", ctx -> {
             if (started.get()) {
                 ctx.getExecutor()
                         .sendMessage(MobSwapPlugin.MINI_MESSAGE.deserialize("<red>The game has already started!"));
                 return;
             }
+            MINUTES_PER_SWAP = ctx.get("minutes");
+            POINT_GOAL = ctx.get("points");
             started.set(true);
             MobSwapPlugin.assignTasksToPlayers();
             doCountdownTask();
@@ -61,7 +64,8 @@ public class MobSwapCommand extends PaperCommand {
                                 return;
                             for (int i = 0; i < 10; i++) {
                                 Bukkit.getOnlinePlayers().forEach(online -> {
-                                    online.getWorld().spawnEntity(online.getLocation(), MobSwapPlugin.PLAYERS_ENTITY_TO_KILL.get(id));
+                                    online.getWorld().spawnEntity(online.getLocation(),
+                                            MobSwapPlugin.PLAYERS_ENTITY_TO_KILL.get(id));
                                 });
                             }
                             Bukkit.getOnlinePlayers().forEach(notifier -> {

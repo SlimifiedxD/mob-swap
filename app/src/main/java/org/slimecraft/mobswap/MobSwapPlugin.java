@@ -46,6 +46,13 @@ public class MobSwapPlugin extends JavaPlugin {
                 return;
             PLAYERS_ENTITY_TO_KILL.remove(id);
             POINTS.merge(id, 1, Integer::sum);
+            if (POINTS.get(id) == MobSwapCommand.POINT_GOAL) {
+                Bukkit.getOnlinePlayers().forEach(online -> {
+                    online.sendMessage(MINI_MESSAGE.deserialize("<green><bold><player> has won!",
+                            TagResolver.resolver("player", Tag.selfClosingInserting(player.displayName()))));
+                });
+                return;
+            }
             FastBoardHelper.refreshBoards(online -> {
                 final List<Component> components = new ArrayList<>();
                 POINTS
@@ -53,13 +60,19 @@ public class MobSwapPlugin extends JavaPlugin {
                         .stream()
                         .sorted(Map.Entry.comparingByValue())
                         .forEach(entry -> {
-                            components.add(MINI_MESSAGE.deserialize("<aqua><player><reset>: <yellow><points>", TagResolver.resolver("player", Tag.selfClosingInserting(Component.text(Bukkit.getOfflinePlayer(entry.getKey()).getName()))), TagResolver.resolver("points", Tag.selfClosingInserting(Component.text(entry.getValue())))));
+                            components.add(MINI_MESSAGE.deserialize("<aqua><player><reset>: <yellow><points>",
+                                    TagResolver.resolver("player",
+                                            Tag.selfClosingInserting(
+                                                    Component.text(Bukkit.getOfflinePlayer(entry.getKey()).getName()))),
+                                    TagResolver.resolver("points",
+                                            Tag.selfClosingInserting(Component.text(entry.getValue())))));
                         });
 
                 return components;
             });
             Bukkit.getOnlinePlayers().forEach(online -> {
-                online.sendMessage(MINI_MESSAGE.deserialize("<green><player> has killed their mob!", TagResolver.resolver("player", Tag.selfClosingInserting(player.displayName()))));
+                online.sendMessage(MINI_MESSAGE.deserialize("<green><player> has killed their mob!",
+                        TagResolver.resolver("player", Tag.selfClosingInserting(player.displayName()))));
             });
             if (!PLAYERS_ENTITY_TO_KILL.isEmpty())
                 return;
