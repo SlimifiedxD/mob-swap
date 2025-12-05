@@ -32,6 +32,11 @@ public class MobSwapCommand extends PaperCommand {
             MINUTES_PER_SWAP = ctx.get("minutes");
             POINT_GOAL = ctx.get("points");
             started.set(true);
+            Bukkit.getOnlinePlayers().forEach(online -> {
+                online.sendMessage(MobSwapPlugin.MINI_MESSAGE
+                        .deserialize("<aqua>The game has started. You must receive<yellow> " + POINT_GOAL
+                                + " <aqua>points with <yellow> " + MINUTES_PER_SWAP + " <aqua>minutes per swap!"));
+            });
             MobSwapPlugin.assignTasksToPlayers();
             doCountdownTask();
         });
