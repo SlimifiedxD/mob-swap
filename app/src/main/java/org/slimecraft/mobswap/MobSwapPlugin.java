@@ -46,13 +46,6 @@ public class MobSwapPlugin extends JavaPlugin {
                 return;
             PLAYERS_ENTITY_TO_KILL.remove(id);
             POINTS.merge(id, 1, Integer::sum);
-            if (POINTS.get(id) == MobSwapCommand.POINT_GOAL) {
-                Bukkit.getOnlinePlayers().forEach(online -> {
-                    online.sendMessage(MINI_MESSAGE.deserialize("<green><bold><player> has won!",
-                            TagResolver.resolver("player", Tag.selfClosingInserting(player.displayName()))));
-                });
-                return;
-            }
             FastBoardHelper.refreshBoards(online -> {
                 final List<Component> components = new ArrayList<>();
                 POINTS
@@ -70,6 +63,13 @@ public class MobSwapPlugin extends JavaPlugin {
 
                 return components;
             });
+            if (POINTS.get(id) == MobSwapCommand.POINT_GOAL) {
+                Bukkit.getOnlinePlayers().forEach(online -> {
+                    online.sendMessage(MINI_MESSAGE.deserialize("<green><bold><player> has won!",
+                            TagResolver.resolver("player", Tag.selfClosingInserting(player.displayName()))));
+                });
+                return;
+            }
             Bukkit.getOnlinePlayers().forEach(online -> {
                 online.sendMessage(MINI_MESSAGE.deserialize("<green><player> has killed their mob!",
                         TagResolver.resolver("player", Tag.selfClosingInserting(player.displayName()))));
