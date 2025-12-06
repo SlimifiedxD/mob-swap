@@ -15,7 +15,7 @@ repositories {
 
 dependencies {
     implementation("com.github.SlimifiedxD:bedrock:main-SNAPSHOT")
-    implementation("com.github.SlimifiedxD.funmands:funmands-paper:master-923ab9bdc9-1")
+    implementation("com.github.SlimifiedxD.funmands:funmands-paper:70bfe2ebac")
     annotationProcessor("com.github.SlimifiedxD:bedrock:main-SNAPSHOT")
     compileOnly("io.papermc.paper:paper-api:1.21.10-R0.1-SNAPSHOT")
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
