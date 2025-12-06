@@ -11,12 +11,11 @@ repositories {
     mavenCentral()
     maven("https://repo.papermc.io/repository/maven-public/")
     maven("https://jitpack.io")
-    mavenLocal()
 }
 
 dependencies {
     implementation("com.github.SlimifiedxD:bedrock:main-SNAPSHOT")
-    implementation("org.slimecraft:funmands-paper:1.0-SNAPSHOT")
+    implementation("com.github.SlimifiedxD.funmands:funmands-paper:master-923ab9bdc9-1")
     annotationProcessor("com.github.SlimifiedxD:bedrock:main-SNAPSHOT")
     compileOnly("io.papermc.paper:paper-api:1.21.10-R0.1-SNAPSHOT")
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
